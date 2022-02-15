@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Event } from './interfaces/event.interface'
 
-let events: Events[];
+let events: Event[];
 @Injectable()
 export class AppService {
-  getEvents(): string {
+  getEvents(): Event[] {
     return events;
   }
 }
