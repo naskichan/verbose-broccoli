@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -23,17 +24,15 @@ describe('AppController', () => {
   describe('addEvents', () => {
     it('should accept an eventdto', () => {
       const appController = app.get<AppController>(AppController);
-      const event: EventDto = {eventTitle: "Hello World", eventDate: Date.now(), eventCity: "World"}
+      const event: EventDto = {eventTitle: "Hello World", eventDate: Date.now(), eventCity: "Mock World"}
       appController.addEvent(event)
 
       expect(appController.getEvents()).toHaveLength(2);
     });
     it('should not create an event on invalid input', () => {
       const appController = app.get<AppController>(AppController);
-      const event: EventDto = {eventTitle: "Hello World", eventDate: 0, eventCity: "World"}
-      appController.addEvent(event)
-
-      expect(appController.getEvents()).toHaveLength(2);
+      const event: EventDto = {eventTitle: "Hello World", eventDate: 0, eventCity: "Mock World"}
+      expect(appController.addEvent(event)).toThrow(BadRequestException);
     });
   });
 });

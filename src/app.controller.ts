@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, BadRequestException} from '@nestjs/common';
 import { AppService } from './app.service';
 import { Event } from './interfaces/event.interface'
 import { EventDto } from './interfaces/event.dto'
@@ -14,7 +14,7 @@ export class AppController {
   @Post('/events')
   addEvent(@Body() message: EventDto) {
     if(message.eventDate < 1600000000 || message.eventCity.length <= 6) {
-      return null;
+      throw new BadRequestException("Bad request")
     }
     return this.appService.addEvent(message)
   }
