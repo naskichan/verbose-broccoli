@@ -1,16 +1,25 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import styled from '@emotion/styled'
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import ConcertCard from './components/ConcertCard';
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import ConcertCard from './components/ConcertCard'
 
-
-function book(id) {
-  //axios call
-  console.log("me wants to book id", id)
-}
 
 function App() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/events').then(res => {
+      console.log(res)
+    })
+  })
+
+  function book(id) {
+    //axios call
+    console.log("me wants to book id", id)
+  }
   return (
     <Container>
       <Box sx={{ bgcolor: '#cfe8fc', height: '100vh'}}>
