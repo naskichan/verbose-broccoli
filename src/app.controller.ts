@@ -13,8 +13,10 @@ export class AppController {
   }
   @Post('/events')
   addEvent(@Body() message: EventDto) {
-    if(message.eventDate < 1600000000 || message.eventCity.length <= 6) {
-      throw new BadRequestException("Bad request")
+    if(message.eventDate < Date.now()) {
+      throw new BadRequestException("Events cannot be in the past")
+    } else if(message.eventCity.length < 6 || message.eventTitle.length < 6) {
+      throw new BadRequestException("Event names and Cities must have at least 6 characters")
     }
     return this.appService.addEvent(message)
   }
