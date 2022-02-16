@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { EventDto } from './interfaces/event.dto'
 
 describe('AppController', () => {
   let app: TestingModule;
@@ -12,10 +13,27 @@ describe('AppController', () => {
     }).compile();
   });
 
-  describe('getHello', () => {
-    it('should return "Hello World!"', () => {
+  describe('getEvents', () => {
+    it('should return 1 event', () => {
       const appController = app.get<AppController>(AppController);
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(appController.getEvents()).toHaveLength(1);
+    });
+  });
+
+  describe('addEvents', () => {
+    it('should accept an eventdto', () => {
+      const appController = app.get<AppController>(AppController);
+      const event: EventDto = {eventTitle: "Hello World", eventDate: Date.now(), eventCity: "World"}
+      appController.addEvent(event)
+
+      expect(appController.getEvents()).toHaveLength(2);
+    });
+    it('should not create an event on invalid input', () => {
+      const appController = app.get<AppController>(AppController);
+      const event: EventDto = {eventTitle: "Hello World", eventDate: 0, eventCity: "World"}
+      appController.addEvent(event)
+
+      expect(appController.getEvents()).toHaveLength(2);
     });
   });
 });
