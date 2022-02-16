@@ -6,8 +6,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 function ConcertCard(props) {
+    const date = new Date(props.date*1000)
     return (
-        <Card sx={{ display: 'flex', justifyContent: "space-between", maxHeight: "8rem", margin: "8rem"}}>
+        <Card sx={{ display: 'flex', justifyContent: "space-between", maxHeight: "8rem", margin: "3rem"}}>
           <CardMedia
             component="img"
             image="https://source.unsplash.com/random?concert"
@@ -18,8 +19,11 @@ function ConcertCard(props) {
             <Typography variant="h6" align="left">
               {props.title}
             </Typography>
-            <Typography variant="body2" align="left">
-              {props.description}
+            <Typography variant="body1" align="left">
+              {date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()}
+            </Typography>
+            <Typography variant="body1" align="left">
+                At: {props.city}
             </Typography>
           </CardContent>
           <CardActions>
