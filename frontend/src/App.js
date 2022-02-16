@@ -12,9 +12,9 @@ function App() {
 
   useEffect(() => {
     axios.get('http://localhost:3000/events').then(res => {
-      console.log(res)
+      setEvents(res.data)
     })
-  })
+  }, [])
 
   function book(id) {
     //axios call
