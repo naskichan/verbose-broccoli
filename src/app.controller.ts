@@ -15,7 +15,7 @@ export class AppController {
   @Post('/events')
   addEvent(@Body() message: EventDto) {
     if(message.eventDate < Date.now()) {
-      throw new BadRequestException("Events cannot be in the past")
+      throw new BadRequestException("Events cannot be in the past, make sure to use a timestamp in miliseconds")
     } else if(message.eventCity.length < 6 || message.eventTitle.length < 6) {
       throw new BadRequestException("Event names and Cities must have at least 6 characters")
     }
@@ -23,6 +23,10 @@ export class AppController {
   }
   @Post('/ticket')
   bookTicket(@Body() message: TicketDto) {
+    //test for invalid input, event doesnt exist, etc.
+    if(this.appService.events[message.eventId] == undefined) {
+      throw new BadRequestException("The event does not exist")
+    }
     return this.appService.addTicket(message)
   }
 }
