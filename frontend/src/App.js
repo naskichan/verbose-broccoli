@@ -8,23 +8,33 @@ import ConcertCard from './components/ConcertCard'
 
 function App() {
   const [events, setEvents] = useState([]);
+  const [shouldUpdate, setShouldUpdate] = useState(false)
 
   useEffect(() => {
     axios.get('http://localhost:3000/events').then(res => {
       setEvents(res.data)
     })
-  }, [])
+  }, [shouldUpdate])
 
   function book(id) {
     //axios call
-    console.log("me wants to book id", id)
+    axios.post('http://localhost:3000/ticket', {
+      "firstName": "John",
+      "lastName": "Doe",
+      "eventId": id
+    }).then(() => {
+      setShouldUpdate(current => !current)
+    })
   }
   return (
     <Container>
       <Box sx={{ padding: "4rem"}}>
-        {events.map(event => (
-          <ConcertCard title={event.eventTitle} date={event.eventDate} city={event.eventCity} onClick={() => book(1)} />
+        {events.map((event, index) => (
+          <ConcertCard key={index} title={event.eventTitle} date={event.eventDate} city={event.eventCity} ticketCount={event.tickets.length} onClick={() => book(index)} />
         ))}
+      </Box>
+      <Box sx={{ padding: "4rem"}}>
+        <AddCard onClick={addEvent}/>
       </Box>
     </Container>
   );
