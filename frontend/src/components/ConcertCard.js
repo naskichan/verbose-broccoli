@@ -28,6 +28,9 @@ function ConcertCard(props) {
           </CardContent>
           <CardActions>
             <Button onClick={props.onClick} variant='contained' size="small">Book</Button>
+            <Typography variant="body1" align="left">
+              {props.ticketCount} {props.ticketCount == 1 ? ("ticket") : ("tickets")} already sold
+            </Typography>
           </CardActions>
           </Card>
     )
