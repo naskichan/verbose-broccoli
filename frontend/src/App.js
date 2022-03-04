@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from '@emotion/styled'
 import Container from '@mui/material/Container'
-import Divider from '@mui/material/Divider'
-import Box from '@mui/material/Box'
 import ConcertCard from './components/ConcertCard'
+import DateAdapter from '@mui/lab/AdapterDayjs';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AddCard from './components/AddCard'
 
 
@@ -32,16 +32,18 @@ function App() {
     return null
   }
   return (
-    <Container sx={{ marginTop: "8rem" }}>
-      <Content>
-        {events.map((event, index) => (
-          <ConcertCard key={index} title={event.eventTitle} date={event.eventDate} city={event.eventCity} ticketCount={event.tickets.length} onClick={() => book(index)} />
-        ))}
-      </Content>
-      <Content>
-        <AddCard onClick={addEvent}/>
-      </Content>
-    </Container>
+    <LocalizationProvider dateAdapter={DateAdapter}>
+      <Container sx={{ marginTop: "8rem" }}>
+        <Content>
+          {events.map((event, index) => (
+            <ConcertCard key={index} title={event.eventTitle} date={event.eventDate} city={event.eventCity} ticketCount={event.tickets.length} onClick={() => book(index)} />
+          ))}
+        </Content>
+        <Content>
+          <AddCard onClick={addEvent}/>
+        </Content>
+      </Container>
+    </LocalizationProvider>
   );
 }
 const BodyWrapper = styled.div`
