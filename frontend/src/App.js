@@ -28,6 +28,9 @@ function App() {
       setShouldUpdate(current => !current)
     })
   }
+  function submit(data) {
+    console.log(data)
+  }
   function addEvent(values) {
     return null
   }
@@ -40,7 +43,7 @@ function App() {
           ))}
         </Content>
         <Content>
-          <AddCard onClick={addEvent}/>
+          <AddCard onClick={addEvent} onDataSubmit={(data) => submit(data)}/>
         </Content>
       </Container>
     </LocalizationProvider>
