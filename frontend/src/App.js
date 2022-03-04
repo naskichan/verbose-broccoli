@@ -29,7 +29,13 @@ function App() {
     })
   }
   function submit(data) {
-    console.log(data)
+    axios.post('http://localhost:3000/events', {
+      "eventTitle": data.eventTitle,
+      "eventDate": data.eventDate,
+      "eventCity": data.eventLocation
+    }).then(() => {
+      setShouldUpdate(current => !current)
+    })
   }
   function addEvent(values) {
     return null
